@@ -56,13 +56,13 @@ const Header = () => {
         </nav>
         <div className="flex items-center gap-4">
           <Button variant="outline" size="sm" asChild className="transition-all duration-300 hover:shadow-md">
-            <a href="https://github.com/yourusername/text-llm" target="_blank" rel="noopener noreferrer">
+            <a href="https://github.com/adityavardhansharma/LLM-TEXT.git" target="_blank" rel="noopener noreferrer">
               <Github className="mr-1.5 h-4 w-4" />
               GitHub
             </a>
           </Button>
           <Button variant="ghost" size="sm" asChild className="transition-all duration-300 hover:shadow-md">
-            <a href="https://github.com/yourusername/text-llm/stargazers" target="_blank" rel="noopener noreferrer">
+            <a href="https://github.com/adityavardhansharma/LLM-TEXT.git" target="_blank" rel="noopener noreferrer">
               <Star className="mr-1.5 h-4 w-4" />
               Star
             </a>
