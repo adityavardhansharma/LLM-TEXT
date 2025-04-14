@@ -28,11 +28,6 @@ const Index = () => {
                   Get Started <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
-              <Button size="lg" variant="outline" className="gap-2" asChild>
-                <a href="https://github.com/yourusername/text-llm" target="_blank" rel="noopener noreferrer">
-                  <Star className="h-4 w-4" /> Star on GitHub
-                </a>
-              </Button>
             </div>
           </div>
         </div>
