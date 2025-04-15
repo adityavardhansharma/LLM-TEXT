@@ -43,7 +43,7 @@ const EXCLUDED_PATHS = [
 // File extensions to exclude
 const EXCLUDED_EXTENSIONS = [
   // Images
-  '.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp', '.ico', '.bmp', '.tiff',
+  '.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp', '.ico', '.bmp', '.tiff','.lockb',
   
   // Fonts
   '.ttf', '.otf', '.woff', '.woff2', '.eot',
