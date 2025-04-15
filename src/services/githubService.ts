@@ -19,7 +19,6 @@ const EXCLUDED_PATHS = [
   'dist',
   'build',
   'coverage',
-  'public',
   '.github',
   '.husky',
   '.cache',
