@@ -1,7 +1,6 @@
-
 import React, { useRef, useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Clipboard, Check, AlertCircle, ChevronDown, ChevronUp, Copy, CheckSquare, Square } from "lucide-react";
+import { Clipboard, Check, AlertCircle, ChevronDown, ChevronUp, Copy, CheckSquare, Square, Download } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
@@ -21,6 +20,7 @@ const OutputDisplay = ({ content, loading, error }: OutputDisplayProps) => {
   const [copiedFiles, setCopiedFiles] = useState<Record<string, boolean>>({});
   const [files, setFiles] = useState<{ name: string; content: string; selected: boolean }[]>([]);
   const [allSelected, setAllSelected] = useState(true);
+  const [isDownloading, setIsDownloading] = useState(false);
   
   // Parse content to separate files
   const parseContentToFiles = (content: string) => {
@@ -104,6 +104,48 @@ const OutputDisplay = ({ content, loading, error }: OutputDisplayProps) => {
       toast({
         title: "Copy failed",
         description: "Could not copy to clipboard. Please try again.",
+        variant: "destructive",
+        duration: 3000,
+      });
+    }
+  };
+  
+  const downloadSelectedFiles = () => {
+    if (files.length === 0) return;
+    
+    try {
+      // Only include selected files
+      const selectedContent = files
+        .filter(file => file.selected)
+        .map(file => `File: ${file.name}\n${"=".repeat(80)}\n${file.content}\n${"=".repeat(80)}\n\n`)
+        .join("");
+      
+      // Create a blob with the content
+      const blob = new Blob([selectedContent], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      
+      // Create a temporary anchor element and trigger download
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'selected_files.txt';
+      a.click();
+      
+      // Clean up
+      URL.revokeObjectURL(url);
+      
+      setIsDownloading(true);
+      toast({
+        title: "File downloaded",
+        description: `${files.filter(file => file.selected).length} files have been downloaded`,
+        duration: 3000,
+      });
+      
+      setTimeout(() => setIsDownloading(false), 2000);
+    } catch (err) {
+      console.error("Failed to download:", err);
+      toast({
+        title: "Download failed",
+        description: "Could not create download. Please try again.",
         variant: "destructive",
         duration: 3000,
       });
@@ -219,6 +261,25 @@ const OutputDisplay = ({ content, loading, error }: OutputDisplayProps) => {
               <>
                 <Clipboard className="h-4 w-4" />
                 Copy Selected
+              </>
+            )}
+          </Button>
+          <Button 
+            variant="default" 
+            size="sm" 
+            className="flex items-center gap-1.5 transition-all duration-300 hover:shadow-md"
+            onClick={downloadSelectedFiles}
+            disabled={isDownloading || files.filter(file => file.selected).length === 0}
+          >
+            {isDownloading ? (
+              <>
+                <Check className="h-4 w-4" />
+                Downloaded!
+              </>
+            ) : (
+              <>
+                <Download className="h-4 w-4" />
+                Download TXT
               </>
             )}
           </Button>
